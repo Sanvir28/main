@@ -1,4 +1,29 @@
-<!DOCTYPE html>
+// Start terminal simulation when page loads
+        window.addEventListener('load', function() {
+            setTimeout(simulateTyping, 500);
+        });
+
+        // Add a bypass for testing (remove in production)
+        document.addEventListener('keydown', function(e) {
+            // Allow Escape key to bypass terminal for testing
+            if (e.key === 'Escape') {
+                enterWebsite();
+            }
+        });
+
+        // Make terminal window focusable for better interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            const terminalWindow = document.querySelector('.terminal-window');
+            if (terminalWindow) {
+                terminalWindow.setAttribute('tabindex', '0');
+                terminalWindow.style.outline = 'none';
+                
+                // Auto-focus the terminal window
+                setTimeout(() => {
+                    terminalWindow.focus();
+                }, 1000);
+            }
+        });<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -658,12 +683,20 @@
 
         // Terminal entrance logic
         let currentInput = '';
-        let inputIndex = 0;
         const targetCommand = 'enter';
+        let terminalReady = false;
+        
+        // Wait for page to fully load before enabling terminal
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                terminalReady = true;
+                console.log('Terminal ready - type "enter" to proceed');
+            }, 1000);
+        });
         
         document.addEventListener('keydown', function(e) {
             const terminalEntrance = document.getElementById('terminalEntrance');
-            if (terminalEntrance.classList.contains('hidden')) return;
+            if (!terminalReady || terminalEntrance.classList.contains('hidden')) return;
 
             if (e.key === 'Backspace') {
                 if (currentInput.length > 0) {
@@ -675,28 +708,45 @@
                 if (currentInput.toLowerCase() === targetCommand) {
                     enterWebsite();
                 } else {
-                    // Wrong command, clear and show error briefly
-                    currentInput = '';
-                    updateTerminalDisplay();
+                    // Wrong command, show error briefly
                     const terminal = document.getElementById('terminalInput');
-                    const originalText = terminal.textContent;
+                    const cursor = terminal.nextElementSibling;
                     terminal.style.color = '#ff0000';
-                    terminal.textContent = 'Access Denied';
+                    cursor.style.color = '#ff0000';
+                    terminal.textContent = 'Access Denied - Type "enter"';
                     setTimeout(() => {
                         terminal.style.color = '#00d4ff';
-                        terminal.textContent = '';
-                    }, 1000);
+                        cursor.style.color = '#00d4ff';
+                        currentInput = '';
+                        updateTerminalDisplay();
+                    }, 2000);
                 }
                 e.preventDefault();
-            } else if (e.key.length === 1) {
-                currentInput += e.key;
+            } else if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
+                // Only allow letters
+                currentInput += e.key.toLowerCase();
                 updateTerminalDisplay();
+                e.preventDefault();
+            }
+        });
+        
+        // Also add click handler for mobile/touch devices
+        document.addEventListener('click', function(e) {
+            const terminalEntrance = document.getElementById('terminalEntrance');
+            if (!terminalReady || terminalEntrance.classList.contains('hidden')) return;
+            
+            // Focus on terminal area to ensure keyboard events work
+            const terminalWindow = document.querySelector('.terminal-window');
+            if (terminalWindow.contains(e.target)) {
                 e.preventDefault();
             }
         });
 
         function updateTerminalDisplay() {
-            document.getElementById('terminalInput').textContent = currentInput;
+            const terminalInput = document.getElementById('terminalInput');
+            if (terminalInput) {
+                terminalInput.textContent = currentInput;
+            }
         }
 
         function enterWebsite() {
@@ -883,30 +933,37 @@
             const terminalOutput = document.createElement('div');
             terminalOutput.style.color = '#00ff00';
             terminalOutput.style.marginTop = '20px';
+            terminalOutput.style.fontSize = '14px';
             
             const terminalWindow = document.querySelector('.terminal-window');
-            terminalWindow.appendChild(terminalOutput);
+            const existingPrompt = terminalWindow.querySelector('.terminal-prompt').parentNode;
+            existingPrompt.insertBefore(terminalOutput, existingPrompt.querySelector('.terminal-prompt'));
             
             function showNextCommand() {
                 if (commandIndex < commands.length) {
                     const commandDiv = document.createElement('div');
-                    commandDiv.style.marginBottom = '10px';
+                    commandDiv.style.marginBottom = '8px';
                     terminalOutput.appendChild(commandDiv);
                     
-                    typeWriter(commandDiv, commands[commandIndex], 50);
+                    typeWriter(commandDiv, commands[commandIndex], 30);
                     commandIndex++;
                     
-                    setTimeout(showNextCommand, 1500);
-                }
+                    if (commandIndex === commands.length) {
+                        // Enable terminal input after all commands are shown
+                        setTimeout(() => {
+                            terminalReady = true;
+                            const prompt = document.querySelector('.terminal-prompt');
+                            prompt.style.color = '#00ff00';
+                            console.log('✓ Terminal ready - type "enter" to access Singh Studios');
+                        }, 1000);
+                    } else {
+                        setTimeout(showNextCommand, 1200);
+                    }
+                } 
             }
             
-            setTimeout(showNextCommand, 1000);
+            setTimeout(showNextCommand, 800);
         }
-
-        // Start terminal simulation when page loads
-        window.addEventListener('load', function() {
-            setTimeout(simulateTyping, 500);
-        });
 
         // Add glow effect to navigation on scroll
         window.addEventListener('scroll', function() {
