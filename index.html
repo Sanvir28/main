@@ -1,4 +1,35 @@
-// Start terminal simulation when page loads
+// Add escape key bypass and click to focus
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                enterWebsite();
+            }
+        });
+
+        // Click anywhere on terminal to ensure focus
+        document.addEventListener('click', function(e) {
+            const terminalEntrance = document.getElementById('terminalEntrance');
+            if (!terminalEntrance.classList.contains('hidden')) {
+                // Ensure we're focused for keyboard input
+                document.body.focus();
+            }
+        });
+
+        // Test function - remove in production
+        function testTerminal() {
+            console.log('🧪 Testing terminal input...');
+            currentInput = 'enter';
+            updateTerminalDisplay();
+            setTimeout(enterWebsite, 1000);
+        }
+
+        // Auto-test after 5 seconds if no input (remove in production)
+        setTimeout(() => {
+            const terminalEntrance = document.getElementById('terminalEntrance');
+            if (!terminalEntrance.classList.contains('hidden')) {
+                console.log('💡 Auto-entering after 5 seconds...');
+                testTerminal();
+            }
+        }, 5000);        // Start terminal simulation when page loads
         window.addEventListener('load', function() {
             setTimeout(simulateTyping, 500);
         });
@@ -53,81 +84,6 @@
             pointer-events: none;
             z-index: -1;
             opacity: 0.1;
-        }
-
-        .terminal-entrance {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
-
-        .terminal-entrance.hidden {
-            opacity: 0;
-            transform: scale(0.8);
-            pointer-events: none;
-        }
-
-        .terminal-window {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #00d4ff;
-            border-radius: 10px;
-            padding: 20px;
-            width: 80%;
-            max-width: 600px;
-            box-shadow: 0 0 50px rgba(0, 212, 255, 0.3);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
-            to { box-shadow: 0 0 50px rgba(0, 212, 255, 0.6); }
-        }
-
-        .terminal-header {
-            color: #00d4ff;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 24px;
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
-        }
-
-        .terminal-prompt {
-            color: #00ff00;
-            margin-bottom: 10px;
-        }
-
-        .terminal-input {
-            background: transparent;
-            border: none;
-            color: #00d4ff;
-            font-family: inherit;
-            font-size: 16px;
-            outline: none;
-            width: 100%;
-            caret-color: #00d4ff;
-        }
-
-        .cursor {
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        .main-website {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
 
         .main-website.visible {
@@ -488,19 +444,8 @@
     <!-- Matrix Background -->
     <canvas class="matrix-bg" id="matrix"></canvas>
 
-    <!-- Terminal Entrance -->
-    <div class="terminal-entrance" id="terminalEntrance">
-        <div class="terminal-window">
-            <div class="terminal-header">SINGH STUDIOS SECURE TERMINAL</div>
-            <div class="terminal-prompt">user@singh-studios:~$ <span id="terminalInput"></span><span class="cursor">|</span></div>
-            <div style="margin-top: 20px; color: #666; font-size: 14px; text-align: center;">
-                Type "enter" to access the system
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Website -->
-    <div class="main-website" id="mainWebsite">
+            <!-- Main Website -->
+    <div class="main-website visible" id="mainWebsite">
         <!-- Navigation -->
         <nav class="navbar">
             <div class="nav-content">
@@ -681,84 +626,10 @@
 
         setInterval(drawMatrix, 35);
 
-        // Terminal entrance logic
-        let currentInput = '';
-        const targetCommand = 'enter';
-        let terminalReady = false;
-        
-        // Wait for page to fully load before enabling terminal
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                terminalReady = true;
-                console.log('Terminal ready - type "enter" to proceed');
-            }, 1000);
+        // Start loading GitHub repos immediately when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadGitHubRepos();
         });
-        
-        document.addEventListener('keydown', function(e) {
-            const terminalEntrance = document.getElementById('terminalEntrance');
-            if (!terminalReady || terminalEntrance.classList.contains('hidden')) return;
-
-            if (e.key === 'Backspace') {
-                if (currentInput.length > 0) {
-                    currentInput = currentInput.slice(0, -1);
-                    updateTerminalDisplay();
-                }
-                e.preventDefault();
-            } else if (e.key === 'Enter') {
-                if (currentInput.toLowerCase() === targetCommand) {
-                    enterWebsite();
-                } else {
-                    // Wrong command, show error briefly
-                    const terminal = document.getElementById('terminalInput');
-                    const cursor = terminal.nextElementSibling;
-                    terminal.style.color = '#ff0000';
-                    cursor.style.color = '#ff0000';
-                    terminal.textContent = 'Access Denied - Type "enter"';
-                    setTimeout(() => {
-                        terminal.style.color = '#00d4ff';
-                        cursor.style.color = '#00d4ff';
-                        currentInput = '';
-                        updateTerminalDisplay();
-                    }, 2000);
-                }
-                e.preventDefault();
-            } else if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
-                // Only allow letters
-                currentInput += e.key.toLowerCase();
-                updateTerminalDisplay();
-                e.preventDefault();
-            }
-        });
-        
-        // Also add click handler for mobile/touch devices
-        document.addEventListener('click', function(e) {
-            const terminalEntrance = document.getElementById('terminalEntrance');
-            if (!terminalReady || terminalEntrance.classList.contains('hidden')) return;
-            
-            // Focus on terminal area to ensure keyboard events work
-            const terminalWindow = document.querySelector('.terminal-window');
-            if (terminalWindow.contains(e.target)) {
-                e.preventDefault();
-            }
-        });
-
-        function updateTerminalDisplay() {
-            const terminalInput = document.getElementById('terminalInput');
-            if (terminalInput) {
-                terminalInput.textContent = currentInput;
-            }
-        }
-
-        function enterWebsite() {
-            const terminalEntrance = document.getElementById('terminalEntrance');
-            const mainWebsite = document.getElementById('mainWebsite');
-            
-            terminalEntrance.classList.add('hidden');
-            setTimeout(() => {
-                mainWebsite.classList.add('visible');
-                loadGitHubRepos(); // Start loading repos immediately
-            }, 500);
-        }
 
         // Navigation and section management
         function showSection(sectionId) {
