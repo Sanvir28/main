@@ -1,326 +1,204 @@
 <!DOCTYPE html>
-// Start terminal simulation when page loads
-        window.addEventListener('load', function() {
-            setTimeout(simulateTyping, 500);
-        });
-
-        // Add a bypass for testing (remove in production)
-        document.addEventListener('keydown', function(e) {
-            // Allow Escape key to bypass terminal for testing
-            if (e.key === 'Escape') {
-                enterWebsite();
-            }
-        });
-
-        // Make terminal window focusable for better interaction
-        document.addEventListener('DOMContentLoaded', function() {
-            const terminalWindow = document.querySelector('.terminal-window');
-            if (terminalWindow) {
-                terminalWindow.setAttribute('tabindex', '0');
-                terminalWindow.style.outline = 'none';
-                
-                // Auto-focus the terminal window
-                setTimeout(() => {
-                    terminalWindow.focus();
-                }, 1000);
-            }
-        });<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-@@ -658,12 +683,20 @@
-
-        // Terminal entrance logic
-        let currentInput = '';
-        let inputIndex = 0;
-        const targetCommand = 'enter';
-        let terminalReady = false;
-        
-        // Wait for page to fully load before enabling terminal
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                terminalReady = true;
-                console.log('Terminal ready - type "enter" to proceed');
-            }, 1000);
-        });
-
-        document.addEventListener('keydown', function(e) {
-            const terminalEntrance = document.getElementById('terminalEntrance');
-            if (terminalEntrance.classList.contains('hidden')) return;
-            if (!terminalReady || terminalEntrance.classList.contains('hidden')) return;
-
-            if (e.key === 'Backspace') {
-                if (currentInput.length > 0) {
-@@ -675,28 +708,45 @@
-                if (currentInput.toLowerCase() === targetCommand) {
-                    enterWebsite();
-                } else {
-                    // Wrong command, clear and show error briefly
-                    currentInput = '';
-                    updateTerminalDisplay();
-                    // Wrong command, show error briefly
-                    const terminal = document.getElementById('terminalInput');
-                    const originalText = terminal.textContent;
-                    const cursor = terminal.nextElementSibling;
-                    terminal.style.color = '#ff0000';
-                    terminal.textContent = 'Access Denied';
-                    cursor.style.color = '#ff0000';
-                    terminal.textContent = 'Access Denied - Type "enter"';
-                    setTimeout(() => {
-                        terminal.style.color = '#00d4ff';
-                        terminal.textContent = '';
-                    }, 1000);
-                        cursor.style.color = '#00d4ff';
-                        currentInput = '';
-                        updateTerminalDisplay();
-                    }, 2000);
-                }
-                e.preventDefault();
-            } else if (e.key.length === 1) {
-                currentInput += e.key;
-            } else if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
-                // Only allow letters
-                currentInput += e.key.toLowerCase();
-                updateTerminalDisplay();
-                e.preventDefault();
-            }
-        });
-        
-        // Also add click handler for mobile/touch devices
-        document.addEventListener('click', function(e) {
-            const terminalEntrance = document.getElementById('terminalEntrance');
-            if (!terminalReady || terminalEntrance.classList.contains('hidden')) return;
-            
-            // Focus on terminal area to ensure keyboard events work
-            const terminalWindow = document.querySelector('.terminal-window');
-            if (terminalWindow.contains(e.target)) {
-                e.preventDefault();
-            }
-        });
-
-        function updateTerminalDisplay() {
-            document.getElementById('terminalInput').textContent = currentInput;
-            const terminalInput = document.getElementById('terminalInput');
-            if (terminalInput) {
-                terminalInput.textContent = currentInput;
-            }
-        }
-
-        function enterWebsite() {
-@@ -883,198 +933,205 @@
-            const terminalOutput = document.createElement('div');
-            terminalOutput.style.color = '#00ff00';
-            terminalOutput.style.marginTop = '20px';
-            terminalOutput.style.fontSize = '14px';
-
-            const terminalWindow = document.querySelector('.terminal-window');
-            terminalWindow.appendChild(terminalOutput);
-            const existingPrompt = terminalWindow.querySelector('.terminal-prompt').parentNode;
-            existingPrompt.insertBefore(terminalOutput, existingPrompt.querySelector('.terminal-prompt'));
-
-            function showNextCommand() {
-                if (commandIndex < commands.length) {
-                    const commandDiv = document.createElement('div');
-                    commandDiv.style.marginBottom = '10px';
-                    commandDiv.style.marginBottom = '8px';
-                    terminalOutput.appendChild(commandDiv);
-
-                    typeWriter(commandDiv, commands[commandIndex], 50);
-                    typeWriter(commandDiv, commands[commandIndex], 30);
-                    commandIndex++;
-
-                    setTimeout(showNextCommand, 1500);
-                }
-                    if (commandIndex === commands.length) {
-                        // Enable terminal input after all commands are shown
-                        setTimeout(() => {
-                            terminalReady = true;
-                            const prompt = document.querySelector('.terminal-prompt');
-                            prompt.style.color = '#00ff00';
-                            console.log('✓ Terminal ready - type "enter" to access Singh Studios');
-                        }, 1000);
-                    } else {
-                        setTimeout(showNextCommand, 1200);
-                    }
-                } 
-            }
-
-            setTimeout(showNextCommand, 1000);
-            setTimeout(showNextCommand, 800);
-        }
-
-        // Start terminal simulation when page loads
-        window.addEventListener('load', function() {
-            setTimeout(simulateTyping, 500);
-        });
-
-        // Add glow effect to navigation on scroll
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 100) {
-                navbar.style.boxShadow = '0 5px 20px rgba(0, 212, 255, 0.1)';
-                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
-            } else {
-                navbar.style.boxShadow = 'none';
-                navbar.style.background = 'rgba(0, 0, 0, 0.9)';
-            }
-        });
-
-        // Mobile menu toggle (for future enhancement)
-        function toggleMobileMenu() {
-            // Future implementation for mobile menu
-        }
-
-        // Preloader for GitHub repositories
-        function showRepoSkeleton() {
-            const grid = document.getElementById('reposGrid');
-            const skeletonHTML = Array(6).fill().map(() => `
-                <div class="repo-card" style="animation: pulse 1.5s ease-in-out infinite alternate;">
-                    <div style="height: 20px; background: rgba(0, 212, 255, 0.1); border-radius: 4px; margin-bottom: 10px;"></div>
-                    <div style="height: 40px; background: rgba(0, 212, 255, 0.05); border-radius: 4px; margin-bottom: 15px;"></div>
-                    <div style="height: 15px; background: rgba(0, 212, 255, 0.1); border-radius: 4px; margin-bottom: 15px; width: 60%;"></div>
-                    <div style="height: 30px; background: rgba(0, 212, 255, 0.1); border-radius: 20px; width: 120px;"></div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singh Studios - Portfolio</title>
+    <meta name="description" content="Singh Studios - Modern portfolio showcasing innovative projects and GitHub repositories with live statistics.">
+    <meta property="og:title" content="Singh Studios - Portfolio">
+    <meta property="og:description" content="Modern portfolio showcasing innovative projects and GitHub repositories with live statistics.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Terminal Entry Screen -->
+    <div id="terminal-screen" class="terminal-screen active">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-controls">
+                    <span class="control close"></span>
+                    <span class="control minimize"></span>
+                    <span class="control maximize"></span>
                 </div>
-            `).join('');
-
-            grid.innerHTML = skeletonHTML;
-        }
-
-        // Enhanced repo loading with skeleton
-        async function loadGitHubRepos() {
-            const loading = document.getElementById('githubLoading');
-            const grid = document.getElementById('reposGrid');
-
-            // Show skeleton instead of spinner
-            loading.style.display = 'none';
-            showRepoSkeleton();
-
-            try {
-                const response = await fetch('https://api.github.com/users/Sanvir28/repos?sort=updated&per_page=12');
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const repos = await response.json();
-
-                // Add a small delay to show the skeleton effect
-                setTimeout(() => {
-                    displayRepos(repos);
-                }, 800);
-
-                // Set up auto-refresh every minute
-                if (repoUpdateInterval) clearInterval(repoUpdateInterval);
-                repoUpdateInterval = setInterval(() => {
-                    loadGitHubRepos();
-                }, 60000); // 60 seconds
-
-            } catch (error) {
-                console.error('Error loading GitHub repos:', error);
-                setTimeout(() => {
-                    grid.innerHTML = `
-                        <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
-                            <div style="color: #ff6b6b; font-size: 1.2rem; margin-bottom: 20px;">⚠️ Failed to load repositories</div>
-                            <p style="color: #666; margin-bottom: 20px;">There was an issue connecting to GitHub. This could be due to rate limiting or network issues.</p>
-                            <button onclick="loadGitHubRepos()" class="cta-button">Try Again</button>
-                        </div>
-                    `;
-                }, 800);
-            }
-        }
-
-        // Enhanced repo display with better formatting
-        function displayRepos(repos) {
-            const grid = document.getElementById('reposGrid');
-
-            if (!repos || repos.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666;">
-                        <div style="font-size: 3rem; margin-bottom: 20px;">📂</div>
-                        <p>No public repositories found.</p>
+                <div class="terminal-title">Terminal</div>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-content">
+                    <div class="terminal-line">
+                        <span class="prompt">singh@studios:~$</span>
+                        <span class="command">Welcome to Singh Studios</span>
                     </div>
-                `;
-                return;
-            }
+                    <div class="terminal-line">
+                        <span class="prompt">singh@studios:~$</span>
+                        <span class="command">Loading portfolio...</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="prompt">singh@studios:~$</span>
+                        <span class="command">Type 'enter' to continue</span>
+                    </div>
+                    <div class="terminal-line current-line">
+                        <span class="prompt">singh@studios:~$</span>
+                        <span id="user-input" class="user-input"></span>
+                        <span class="cursor">_</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            grid.innerHTML = repos.map(repo => {
-                const updatedDate = new Date(repo.updated_at);
-                const now = new Date();
-                const diffTime = Math.abs(now - updatedDate);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    <!-- Main Website -->
+    <div id="main-site" class="main-site">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1>Singh Studios</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#repositories" class="nav-link">Repositories</a></li>
+                    <li><a href="#stats" class="nav-link">Statistics</a></li>
+                    <li><a href="#terms" class="nav-link">Terms</a></li>
+                </ul>
+            </div>
+        </nav>
 
-                let timeAgo;
-                if (diffDays === 1) {
-                    timeAgo = '1 day ago';
-                } else if (diffDays < 30) {
-                    timeAgo = `${diffDays} days ago`;
-                } else if (diffDays < 365) {
-                    const months = Math.ceil(diffDays / 30);
-                    timeAgo = `${months} month${months > 1 ? 's' : ''} ago`;
-                } else {
-                    const years = Math.ceil(diffDays / 365);
-                    timeAgo = `${years} year${years > 1 ? 's' : ''} ago`;
-                }
-
-                return `
-                    <div class="repo-card">
-                        <div class="repo-name">${repo.name}</div>
-                        <div class="repo-description">${repo.description || 'No description available'}</div>
-                        <div class="repo-stats">
-                            <div class="repo-stat">
-                                <span>⭐</span>
-                                <span>${repo.stargazers_count}</span>
-                            </div>
-                            <div class="repo-stat">
-                                <span>🍴</span>
-                                <span>${repo.forks_count}</span>
-                            </div>
-                            <div class="repo-stat">
-                                <span>👁️</span>
-                                <span>${repo.watchers_count}</span>
-                            </div>
-                            ${repo.language ? `<div class="repo-stat repo-language">${repo.language}</div>` : ''}
+        <!-- Home Section -->
+        <section id="home" class="section home-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Welcome to <span class="highlight">Singh Studios</span></h1>
+                    <p class="hero-subtitle">Innovative development and creative solutions</p>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="repo-count">-</div>
+                            <div class="stat-label">Public Repositories</div>
                         </div>
-                        <div style="margin-bottom: 15px; font-size: 0.85rem; color: #888;">
-                            <div>Updated ${timeAgo}</div>
-                            ${repo.size ? `<div>Size: ${(repo.size / 1024).toFixed(1)} MB</div>` : ''}
-                        </div>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <a href="${repo.html_url}" target="_blank" class="repo-link">View Repository</a>
-                            ${repo.homepage ? `<a href="${repo.homepage}" target="_blank" style="color: #00d4ff; text-decoration: none; font-size: 0.9rem;">🔗 Demo</a>` : ''}
+                        <div class="stat-card">
+                            <div class="stat-number" id="total-views">-</div>
+                            <div class="stat-label">Total Views</div>
                         </div>
                     </div>
-                `;
-            }).join('');
-        }
+                </div>
+            </div>
+        </section>
 
-        // Add CSS animation for pulse effect
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                from { opacity: 0.6; }
-                to { opacity: 1; }
-            }
+        <!-- Repositories Section -->
+        <section id="repositories" class="section repositories-section">
+            <div class="container">
+                <h2 class="section-title">GitHub Repositories</h2>
+                <div class="refresh-indicator">
+                    <span id="last-updated">Last updated: Never</span>
+                    <div class="refresh-timer">
+                        <span>Next refresh in: <span id="refresh-countdown">30</span>s</span>
+                    </div>
+                </div>
+                <div id="repositories-grid" class="repositories-grid">
+                    <div class="loading-card">
+                        <div class="loading-spinner"></div>
+                        <p>Loading repositories...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            .fade-in {
-                animation: slideUp 0.6s ease-out forwards;
-            }
+        <!-- Statistics Section -->
+        <section id="stats" class="section stats-section">
+            <div class="container">
+                <h2 class="section-title">GitHub Statistics</h2>
+                <div class="stats-container">
+                    <div class="stat-card large">
+                        <h3>Profile Overview</h3>
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <span class="stat-value" id="followers-count">-</span>
+                                <span class="stat-name">Followers</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="stat-value" id="following-count">-</span>
+                                <span class="stat-name">Following</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="stat-value" id="public-repos-count">-</span>
+                                <span class="stat-name">Public Repos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card large">
+                        <h3>Repository Insights</h3>
+                        <div id="language-stats" class="language-stats">
+                            <div class="loading-text">Loading language statistics...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            @keyframes slideUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
+        <!-- Terms Section -->
+        <section id="terms" class="section terms-section">
+            <div class="container">
+                <h2 class="section-title">Terms and Conditions</h2>
+                <div class="terms-content">
+                    <div class="terms-card">
+                        <h3>1. Acceptance of Terms</h3>
+                        <p>By accessing and using this portfolio website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                    </div>
+                    <div class="terms-card">
+                        <h3>2. Use License</h3>
+                        <p>Permission is granted to temporarily view the materials on Singh Studios' website for personal, non-commercial transitory viewing only.</p>
+                    </div>
+                    <div class="terms-card">
+                        <h3>3. Disclaimer</h3>
+                        <p>The materials on Singh Studios' website are provided on an 'as is' basis. Singh Studios makes no warranties, expressed or implied.</p>
+                    </div>
+                    <div class="terms-card">
+                        <h3>4. GitHub Integration</h3>
+                        <p>This website displays public GitHub repository information. All repository data is sourced from GitHub's public API and belongs to their respective owners.</p>
+                    </div>
+                    <div class="terms-card">
+                        <h3>5. Privacy</h3>
+                        <p>This website does not collect personal information. Repository statistics are fetched from public GitHub APIs and displayed for portfolio purposes only.</p>
+                    </div>
+                    <div class="terms-card">
+                        <h3>6. Limitations</h3>
+                        <p>In no event shall Singh Studios be liable for any damages arising out of the use or inability to use the materials on this website.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        // Clean up intervals when leaving the page
-        window.addEventListener('beforeunload', function() {
-            if (repoUpdateInterval) {
-                clearInterval(repoUpdateInterval);
-            }
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>Singh Studios</h3>
+                        <p>Modern development solutions and creative portfolio showcase.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Links</h3>
+                        <ul>
+                            <li><a href="https://github.com/Sanvir28" target="_blank">GitHub Profile</a></li>
+                            <li><a href="#repositories">Repositories</a></li>
+                            <li><a href="#stats">Statistics</a></li>
+                            <li><a href="#terms">Terms</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Contact</h3>
+                        <p>Connect with Singh Studios for collaboration opportunities.</p>
+                        <div class="social-links">
+                            <a href="https://github.com/Sanvir28" target="_blank" class="social-link">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Singh Studios. All rights reserved. | <a href="#terms">Terms & Conditions</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
