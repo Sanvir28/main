@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — Sanvir Singh</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="theme">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Sanvir <span>Singh</span></a>
+      <button class="nav-toggle" id="navToggle5" aria-label="Toggle navigation">☰</button>
+      <nav class="nav" id="nav5">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="awards.html">Awards</a>
+        <a href="contact.html" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Contact</h1>
+
+    <section class="card contact-card">
+      <h2>Get in touch</h2>
+      <p>Best email: <a href="mailto:sanvir2010@gmail.com?cc=singhstudios2010@gmail.com">sanvir2010@gmail.com</a> (auto-ccs <code>singhstudios2010@gmail.com</code>)</p>
+      <p>School email: <a href="mailto:s.singh28@scvths.net">s.singh28@scvths.net</a></p>
+      <p>Phone: +1 (908) 346-1614</p>
+      <p>Address: 232 Wildflower Lane, Hillsborough, NJ 08844</p>
+
+      <form id="contactForm" onsubmit="return openMailClient()" class="form-grid">
+        <label>
+          Your name
+          <input id="cf-name" required>
+        </label>
+        <label>
+          Your email
+          <input id="cf-email" type="email" required>
+        </label>
+        <label class="wide">
+          Message
+          <textarea id="cf-message" rows="6" required></textarea>
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Open email client</button>
+          <button type="button" class="btn outline" onclick="sendViaFormspree()">Send (Formspree)</button>
+        </div>
+      </form>
+
+      <p class="muted">Tip: the \"Open email client\" option opens the visitor's mail program pre-filled. For serverless posting use Formspree — see README.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© <span id="yearContact"></span> Sanvir Singh</div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,204 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Singh Studios - Portfolio</title>
-    <meta name="description" content="Singh Studios - Modern portfolio showcasing innovative projects and GitHub repositories with live statistics.">
-    <meta property="og:title" content="Singh Studios - Portfolio">
-    <meta property="og:description" content="Modern portfolio showcasing innovative projects and GitHub repositories with live statistics.">
-    <meta property="og:type" content="website">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sanvir Singh — Portfolio</title>
+  <meta name="description" content="Sanvir Singh — Software developer, robotics & cybersecurity enthusiast" />
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
-    <!-- Terminal Entry Screen -->
-    <div id="terminal-screen" class="terminal-screen active">
-        <div class="terminal">
-            <div class="terminal-header">
-                <div class="terminal-controls">
-                    <span class="control close"></span>
-                    <span class="control minimize"></span>
-                    <span class="control maximize"></span>
-                </div>
-                <div class="terminal-title">Terminal</div>
-            </div>
-            <div class="terminal-body">
-                <div class="terminal-content">
-                    <div class="terminal-line">
-                        <span class="prompt">singh@studios:~$</span>
-                        <span class="command">Welcome to Singh Studios</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="prompt">singh@studios:~$</span>
-                        <span class="command">Loading portfolio...</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="prompt">singh@studios:~$</span>
-                        <span class="command">Type 'enter' to continue</span>
-                    </div>
-                    <div class="terminal-line current-line">
-                        <span class="prompt">singh@studios:~$</span>
-                        <span id="user-input" class="user-input"></span>
-                        <span class="cursor">_</span>
-                    </div>
-                </div>
-            </div>
+<body class="theme">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Sanvir <span>Singh</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+      <nav class="nav" id="nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="awards.html">Awards</a>
+        <a href="contact.html">Contact</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-left">
+        <h1 class="glow">Sanvir <span class="mono">Singh</span></h1>
+        <p class="subtitle">Futuristic software developer — robotics, game AI, cybersecurity & web apps.</p>
+        <p class="lead">I create real-time systems, intelligent agents and polished web experiences. My portfolio contains game projects, AI experiments, and robotics work.</p>
+        <div class="cta">
+          <a class="btn primary" href="projects.html">View Projects</a>
+          <a class="btn outline" href="about.html">About Me</a>
         </div>
+      </div>
+      <aside class="hero-card">
+        <img src="assets/avatar.png" alt="Sanvir avatar" class="avatar">
+        <dl class="info">
+          <div><dt>Phone</dt><dd>+1 (908) 346-1614</dd></div>
+          <div><dt>Email</dt><dd><a href="mailto:sanvir2010@gmail.com?cc=singhstudios2010@gmail.com">sanvir2010@gmail.com</a></dd></div>
+          <div><dt>School Email</dt><dd><a href="mailto:s.singh28@scvths.net">s.singh28@scvths.net</a></dd></div>
+          <div><dt>Location</dt><dd>232 Wildflower Lane, Hillsborough, NJ 08844</dd></div>
+        </dl>
+        <a class="btn small" href="contact.html">Get in touch</a>
+      </aside>
+    </section>
+
+    <section class="highlights container">
+      <h2>Quick Highlights</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Robotics</h3>
+          <p>FLL mentor, lunar ejecting robot contributor, rover/ejection system experience.</p>
+        </div>
+        <div class="card">
+          <h3>AI & Games</h3>
+          <p>Rock-Paper-Scissors AI tournaments, game AI for prototypes and simulations.</p>
+        </div>
+        <div class="card">
+          <h3>Cybersecurity</h3>
+          <p>Garden State CTF — first place; recognized by Governor Phillips D. Murphy for achievement.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> Sanvir Singh</div>
+      <div class="footer-links">
+        <a href="https://github.com/Sanvir28" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.canva.com/design/DAGQeSN57cE/lg9j0pTCKoF-ceeBc7I0zQ/view" target="_blank" rel="noopener">Resume</a>
+      </div>
     </div>
+  </footer>
 
-    <!-- Main Website -->
-    <div id="main-site" class="main-site">
-        <!-- Navigation -->
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-logo">
-                    <h1>Singh Studios</h1>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="#home" class="nav-link">Home</a></li>
-                    <li><a href="#repositories" class="nav-link">Repositories</a></li>
-                    <li><a href="#stats" class="nav-link">Statistics</a></li>
-                    <li><a href="#terms" class="nav-link">Terms</a></li>
-                </ul>
-            </div>
-        </nav>
-
-        <!-- Home Section -->
-        <section id="home" class="section home-section">
-            <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-title">Welcome to <span class="highlight">Singh Studios</span></h1>
-                    <p class="hero-subtitle">Innovative development and creative solutions</p>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-number" id="repo-count">-</div>
-                            <div class="stat-label">Public Repositories</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="total-views">-</div>
-                            <div class="stat-label">Total Views</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Repositories Section -->
-        <section id="repositories" class="section repositories-section">
-            <div class="container">
-                <h2 class="section-title">GitHub Repositories</h2>
-                <div class="refresh-indicator">
-                    <span id="last-updated">Last updated: Never</span>
-                    <div class="refresh-timer">
-                        <span>Next refresh in: <span id="refresh-countdown">30</span>s</span>
-                    </div>
-                </div>
-                <div id="repositories-grid" class="repositories-grid">
-                    <div class="loading-card">
-                        <div class="loading-spinner"></div>
-                        <p>Loading repositories...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Statistics Section -->
-        <section id="stats" class="section stats-section">
-            <div class="container">
-                <h2 class="section-title">GitHub Statistics</h2>
-                <div class="stats-container">
-                    <div class="stat-card large">
-                        <h3>Profile Overview</h3>
-                        <div class="profile-stats">
-                            <div class="profile-stat">
-                                <span class="stat-value" id="followers-count">-</span>
-                                <span class="stat-name">Followers</span>
-                            </div>
-                            <div class="profile-stat">
-                                <span class="stat-value" id="following-count">-</span>
-                                <span class="stat-name">Following</span>
-                            </div>
-                            <div class="profile-stat">
-                                <span class="stat-value" id="public-repos-count">-</span>
-                                <span class="stat-name">Public Repos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat-card large">
-                        <h3>Repository Insights</h3>
-                        <div id="language-stats" class="language-stats">
-                            <div class="loading-text">Loading language statistics...</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Terms Section -->
-        <section id="terms" class="section terms-section">
-            <div class="container">
-                <h2 class="section-title">Terms and Conditions</h2>
-                <div class="terms-content">
-                    <div class="terms-card">
-                        <h3>1. Acceptance of Terms</h3>
-                        <p>By accessing and using this portfolio website, you accept and agree to be bound by the terms and provision of this agreement.</p>
-                    </div>
-                    <div class="terms-card">
-                        <h3>2. Use License</h3>
-                        <p>Permission is granted to temporarily view the materials on Singh Studios' website for personal, non-commercial transitory viewing only.</p>
-                    </div>
-                    <div class="terms-card">
-                        <h3>3. Disclaimer</h3>
-                        <p>The materials on Singh Studios' website are provided on an 'as is' basis. Singh Studios makes no warranties, expressed or implied.</p>
-                    </div>
-                    <div class="terms-card">
-                        <h3>4. GitHub Integration</h3>
-                        <p>This website displays public GitHub repository information. All repository data is sourced from GitHub's public API and belongs to their respective owners.</p>
-                    </div>
-                    <div class="terms-card">
-                        <h3>5. Privacy</h3>
-                        <p>This website does not collect personal information. Repository statistics are fetched from public GitHub APIs and displayed for portfolio purposes only.</p>
-                    </div>
-                    <div class="terms-card">
-                        <h3>6. Limitations</h3>
-                        <p>In no event shall Singh Studios be liable for any damages arising out of the use or inability to use the materials on this website.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-content">
-                    <div class="footer-section">
-                        <h3>Singh Studios</h3>
-                        <p>Modern development solutions and creative portfolio showcase.</p>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Links</h3>
-                        <ul>
-                            <li><a href="https://github.com/Sanvir28" target="_blank">GitHub Profile</a></li>
-                            <li><a href="#repositories">Repositories</a></li>
-                            <li><a href="#stats">Statistics</a></li>
-                            <li><a href="#terms">Terms</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Contact</h3>
-                        <p>Connect with Singh Studios for collaboration opportunities.</p>
-                        <div class="social-links">
-                            <a href="https://github.com/Sanvir28" target="_blank" class="social-link">GitHub</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <p>&copy; 2025 Singh Studios. All rights reserved. | <a href="#terms">Terms & Conditions</a></p>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <script src="script.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
